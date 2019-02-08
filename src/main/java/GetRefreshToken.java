@@ -46,7 +46,7 @@ public final class GetRefreshToken
 
 		String authorizeUrl = authorizationFlow.newAuthorizationUrl().setRedirectUri(CALLBACK_URL).build();
 		System.out.println("Open this url in your browser: \n"+authorizeUrl);
-		String authorizationCode = readInputLine("Enter the code you received: ");
+		String authorizationCode = readInputLine("Enter the code you received:");
 
 		GoogleAuthorizationCodeTokenRequest tokenRequest = authorizationFlow.newTokenRequest(authorizationCode);
 		tokenRequest.setRedirectUri(CALLBACK_URL);
@@ -54,6 +54,18 @@ public final class GetRefreshToken
 
 		GoogleCredential credential = buildCredential(clientSecrets, tokenResponse);
 		System.out.println("Your refresh token is: "+credential.getRefreshToken());
+	}
+
+	private static GoogleClientSecrets createClientSecrets()
+	{
+		Details webSecrets = new Details();
+		webSecrets.setClientId(readInputLine("enter clientId:"));
+		webSecrets.setClientSecret(readInputLine("enter clientSecret:"));
+
+		GoogleClientSecrets clientSecrets = new GoogleClientSecrets();
+		clientSecrets.setWeb(webSecrets);
+
+		return clientSecrets;
 	}
 
 	private static GoogleCredential buildCredential(GoogleClientSecrets clientSecrets, GoogleTokenResponse tokenResponse)
@@ -66,18 +78,6 @@ public final class GetRefreshToken
 
 		credential.setFromTokenResponse(tokenResponse);
 		return credential;
-	}
-
-	private static GoogleClientSecrets createClientSecrets()
-	{
-		Details webSecrets = new Details();
-		webSecrets.setClientId(readInputLine("enter clientId"));
-		webSecrets.setClientSecret(readInputLine("enter clientSecret"));
-
-		GoogleClientSecrets clientSecrets = new GoogleClientSecrets();
-		clientSecrets.setWeb(webSecrets);
-
-		return clientSecrets;
 	}
 
 	private static String readInputLine(String prompt)
