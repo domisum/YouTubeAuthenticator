@@ -7,15 +7,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GetRefreshToken
 {
 
@@ -30,6 +27,14 @@ public final class GetRefreshToken
 	private static final String CALLBACK_URL = "urn:ietf:wg:oauth:2.0:oob";
 
 
+	// INIT
+	private GetRefreshToken()
+	{
+
+	}
+
+
+	// RUN
 	public static void main(String[] args) throws IOException
 	{
 		GoogleClientSecrets clientSecrets = createClientSecrets();
@@ -40,7 +45,7 @@ public final class GetRefreshToken
 		).setAccessType("offline").build();
 
 		String authorizeUrl = authorizationFlow.newAuthorizationUrl().setRedirectUri(CALLBACK_URL).build();
-		System.out.println("Open this url in your browser: \n" + authorizeUrl);
+		System.out.println("Open this url in your browser: \n"+authorizeUrl);
 		String authorizationCode = readInputLine("Enter the code you received: ");
 
 		GoogleAuthorizationCodeTokenRequest tokenRequest = authorizationFlow.newTokenRequest(authorizationCode);
@@ -48,7 +53,7 @@ public final class GetRefreshToken
 		GoogleTokenResponse tokenResponse = tokenRequest.execute();
 
 		GoogleCredential credential = buildCredential(clientSecrets, tokenResponse);
-		System.out.println("Your refresh token is: " + credential.getRefreshToken());
+		System.out.println("Your refresh token is: "+credential.getRefreshToken());
 	}
 
 	private static GoogleCredential buildCredential(GoogleClientSecrets clientSecrets, GoogleTokenResponse tokenResponse)
