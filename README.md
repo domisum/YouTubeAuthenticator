@@ -2,7 +2,7 @@ YouTubeAuthenticator
 ==================
 
 YouTube authenticator is a simple application that generates a refresh
-token Google API endpoints.
+token for Google API endpoints.
 
 
 ### Usage
