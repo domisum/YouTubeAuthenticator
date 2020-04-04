@@ -45,7 +45,7 @@ public final class GetRefreshToken
 		).setAccessType("offline").build();
 
 		String authorizeUrl = authorizationFlow.newAuthorizationUrl().setRedirectUri(CALLBACK_URL).build();
-		System.out.println("Open this url in your browser: \n"+authorizeUrl);
+		System.out.println("Open this url in your browser: \n"+authorizeUrl+"\n");
 		String authorizationCode = readInputLine("Enter the code you received:");
 
 		GoogleAuthorizationCodeTokenRequest tokenRequest = authorizationFlow.newTokenRequest(authorizationCode);
@@ -53,7 +53,7 @@ public final class GetRefreshToken
 		GoogleTokenResponse tokenResponse = tokenRequest.execute();
 
 		GoogleCredential credential = buildCredential(clientSecrets, tokenResponse);
-		System.out.println("Your refresh token is: "+credential.getRefreshToken());
+		System.out.println("Your refresh token is:\n"+credential.getRefreshToken());
 	}
 
 	private static GoogleClientSecrets createClientSecrets()
